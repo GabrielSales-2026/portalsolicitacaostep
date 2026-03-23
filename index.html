@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aumento?</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      text-align: center;
+      width: 420px;
+      position: relative;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      height: 60px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 26px;
+      font-size: 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    #sim {
+      background: #28a745;
+      color: white;
+    }
+
+    #sim:hover {
+      transform: scale(1.05);
+    }
+
+    #nao {
+      background: #dc3545;
+      color: white;
+      position: absolute;
+      left: 220px;
+      top: 0;
+    }
+
+    #mensagem {
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Chefe, aceita me dar um aumento? 😁</h1>
+
+    <div class="botoes" id="areaBotoes">
+      <button id="sim">Sim</button>
+      <button id="nao">Não</button>
+    </div>
+
+    <div id="mensagem"></div>
+  </div>
+
+  <script>
+    const botaoNao = document.getElementById("nao");
+    const botaoSim = document.getElementById("sim");
+    const mensagem = document.getElementById("mensagem");
+    const area = document.getElementById("areaBotoes");
+
+    botaoNao.addEventListener("mouseover", () => {
+      const areaWidth = area.clientWidth - botaoNao.offsetWidth;
+      const areaHeight = area.clientHeight - botaoNao.offsetHeight;
+
+      const novoX = Math.random() * areaWidth;
+      const novoY = Math.random() * areaHeight;
+
+      botaoNao.style.left = `${novoX}px`;
+      botaoNao.style.top = `${novoY}px`;
+    });
+
+    botaoSim.addEventListener("click", () => {
+      mensagem.textContent = "Excelente decisão, chefe. Você nunca erra. 😎";
+    });
+  </script>
+</body>
+</html>
