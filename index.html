@@ -3,10 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solicitação Estratégica</title>
+  <title>Portal de Solicitação Interna</title>
   <style>
     * {
       box-sizing: border-box;
+    }
+
+    :root {
+      --bg-1: #1f3b73;
+      --bg-2: #0f172a;
+      --bg-3: #020617;
+      --card: rgba(15, 23, 42, 0.78);
+      --line: rgba(255, 255, 255, 0.10);
+      --soft: #cbd5e1;
+      --muted: #94a3b8;
+      --title: #f8fafc;
+      --ok: #22c55e;
+      --ok-2: #16a34a;
+      --bad: #ef4444;
+      --bad-2: #dc2626;
+      --blue: #3b82f6;
     }
 
     body {
@@ -14,7 +30,7 @@
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top, #1f3b73 0%, #0f172a 45%, #020617 100%);
+        radial-gradient(circle at top, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
       color: #e5e7eb;
       display: flex;
       align-items: center;
@@ -23,42 +39,79 @@
       padding: 20px;
     }
 
-    .bg-glow {
+    .bg-glow,
+    .bg-glow-2,
+    .bg-glow-3 {
       position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+
+    .bg-glow {
       width: 420px;
       height: 420px;
-      border-radius: 50%;
       background: rgba(59, 130, 246, 0.18);
-      filter: blur(80px);
       top: 10%;
       left: 10%;
-      pointer-events: none;
     }
 
     .bg-glow-2 {
-      position: fixed;
       width: 360px;
       height: 360px;
-      border-radius: 50%;
       background: rgba(16, 185, 129, 0.14);
-      filter: blur(80px);
       bottom: 8%;
       right: 10%;
-      pointer-events: none;
+    }
+
+    .bg-glow-3 {
+      width: 260px;
+      height: 260px;
+      background: rgba(168, 85, 247, 0.12);
+      top: 60%;
+      left: 20%;
     }
 
     .card {
       width: 100%;
-      max-width: 720px;
-      background: rgba(15, 23, 42, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.10);
+      max-width: 760px;
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 24px;
-      padding: 34px 28px 38px;
+      padding: 22px 28px 34px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(12px);
       position: relative;
       z-index: 2;
       text-align: center;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      text-align: left;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .topbar strong {
+      color: #dbeafe;
+      font-weight: 700;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      color: #fde68a;
+      white-space: nowrap;
     }
 
     .tag {
@@ -78,15 +131,86 @@
       margin: 0 0 14px;
       font-size: 34px;
       line-height: 1.15;
-      color: #f8fafc;
+      color: var(--title);
     }
 
     .subtitle {
       margin: 0 auto;
-      max-width: 560px;
+      max-width: 600px;
       font-size: 17px;
       line-height: 1.6;
+      color: var(--soft);
+    }
+
+    .checklist {
+      margin-top: 24px;
+      text-align: left;
+      padding: 18px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .checklist-title {
+      font-size: 14px;
       color: #cbd5e1;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+      color: #e2e8f0;
+    }
+
+    .check-item:last-child {
+      border-bottom: none;
+    }
+
+    .ok {
+      color: #86efac;
+      font-weight: 700;
+    }
+
+    .pending {
+      color: #fcd34d;
+      font-weight: 700;
+    }
+
+    .progress-box {
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 84%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      transition: width 0.3s ease;
     }
 
     .question-box {
@@ -106,14 +230,14 @@
 
     .note {
       margin: 0;
-      color: #94a3b8;
+      color: var(--muted);
       font-size: 14px;
     }
 
     .button-area {
       margin-top: 28px;
       position: relative;
-      height: 170px;
+      height: 190px;
       border-radius: 18px;
       background: rgba(2, 6, 23, 0.35);
       border: 1px dashed rgba(255, 255, 255, 0.12);
@@ -145,9 +269,10 @@
       position: absolute;
       left: 32%;
       top: 50%;
-      transform: translate(-50%, -50%);
-      background: linear-gradient(135deg, #22c55e, #16a34a);
+      transform: translate(-50%, -50%) scale(1);
+      background: linear-gradient(135deg, var(--ok), var(--ok-2));
       color: white;
+      z-index: 2;
     }
 
     #btnNao {
@@ -155,8 +280,9 @@
       left: 68%;
       top: 50%;
       transform: translate(-50%, -50%);
-      background: linear-gradient(135deg, #ef4444, #dc2626);
+      background: linear-gradient(135deg, var(--bad), var(--bad-2));
       color: white;
+      z-index: 3;
       transition:
         left 0.18s ease,
         top 0.18s ease,
@@ -164,9 +290,23 @@
         box-shadow 0.18s ease;
     }
 
+    .attempts {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      min-height: 18px;
+    }
+
+    .warning-box {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #fca5a5;
+      min-height: 18px;
+    }
+
     .result {
       margin-top: 24px;
-      min-height: 64px;
+      min-height: 84px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -175,9 +315,10 @@
     }
 
     .result-message {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: bold;
       color: #86efac;
+      line-height: 1.6;
       animation: fadeIn 0.4s ease;
     }
 
@@ -215,7 +356,11 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 700px) {
+      .topbar {
+        flex-direction: column;
+      }
+
       h1 {
         font-size: 28px;
       }
@@ -237,15 +382,60 @@
 <body>
   <div class="bg-glow"></div>
   <div class="bg-glow-2"></div>
+  <div class="bg-glow-3"></div>
 
   <main class="card">
+    <div class="topbar">
+      <div>
+        <strong>STEP Oil & Gas • Portal de Solicitação Interna</strong><br>
+        Protocolo: SAL-2026-031<br>
+        Departamento: Suprimentos / Gestão Estratégica de Pessoas
+      </div>
+      <div class="status-pill">Status: aguardando aprovação final</div>
+    </div>
+
     <div class="tag">SOLICITAÇÃO CONFIDENCIAL • RH NÃO PRECISA SABER</div>
 
     <h1>Análise de viabilidade orçamentária</h1>
     <p class="subtitle">
-      Após criteriosa avaliação de performance, comprometimento e paciência,
-      identificou-se uma oportunidade real de valorização salarial imediata.
+      Após criteriosa avaliação de performance, comprometimento, produtividade,
+      capacidade analítica e resiliência operacional, identificou-se uma oportunidade
+      real de valorização salarial imediata.
     </p>
+
+    <section class="checklist">
+      <div class="checklist-title">CRITÉRIOS DE AVALIAÇÃO</div>
+      <div class="check-item">
+        <span>Entrega operacional e acompanhamento de processos</span>
+        <span class="ok">Aprovado</span>
+      </div>
+      <div class="check-item">
+        <span>Capacidade de pressão elegante sobre fornecedores</span>
+        <span class="ok">Aprovado</span>
+      </div>
+      <div class="check-item">
+        <span>Construção de indicadores e dashboards</span>
+        <span class="ok">Aprovado</span>
+      </div>
+      <div class="check-item">
+        <span>Resistência a urgências de última hora</span>
+        <span class="ok">Aprovado</span>
+      </div>
+      <div class="check-item">
+        <span>Ajuste salarial compatível com a realidade</span>
+        <span class="pending">Pendente de sua boa vontade</span>
+      </div>
+    </section>
+
+    <section class="progress-box">
+      <div class="progress-head">
+        <span>Progresso do processo</span>
+        <span id="progressText">84%</span>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </section>
 
     <section class="question-box">
       <p class="question">Chefe, aceita me dar um aumento?</p>
@@ -259,21 +449,62 @@
       </div>
     </section>
 
+    <div class="attempts" id="contador"></div>
+    <div class="warning-box" id="warningBox"></div>
+
     <div class="result" id="result"></div>
 
     <div class="footer">
-      Documento elaborado com alto rigor técnico e baixíssima imparcialidade.
+      Documento elaborado com alto rigor técnico, forte embasamento emocional e baixíssima imparcialidade.
     </div>
   </main>
+
+  <audio id="somAprovado" preload="auto">
+    <source src="https://actions.google.com/sounds/v1/cartoon/concussive_hit_guitar_boing.ogg" type="audio/ogg">
+  </audio>
 
   <script>
     const btnSim = document.getElementById("btnSim");
     const btnNao = document.getElementById("btnNao");
     const result = document.getElementById("result");
     const buttonWrap = document.getElementById("buttonWrap");
+    const contador = document.getElementById("contador");
+    const warningBox = document.getElementById("warningBox");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const somAprovado = document.getElementById("somAprovado");
 
     let tentativas = 0;
     let bloqueado = false;
+    let progresso = 84;
+
+    function atualizarMensagens() {
+      if (tentativas >= 3) btnNao.textContent = "Tem certeza?";
+      if (tentativas >= 6) btnNao.textContent = "Olha o risco...";
+      if (tentativas >= 9) btnNao.textContent = "Isso impacta o clima";
+      if (tentativas >= 12) btnNao.textContent = "Vai gerar retrabalho";
+      if (tentativas >= 15) btnNao.textContent = "Melhor clicar em sim";
+      if (tentativas >= 20) btnNao.textContent = "Decisão incorreta";
+
+      contador.textContent = `Tentativas de decisão incorreta: ${tentativas}`;
+
+      if (tentativas >= 5 && tentativas < 10) {
+        warningBox.textContent = "Aviso: comportamento divergente da estratégia recomendada.";
+      } else if (tentativas >= 10 && tentativas < 15) {
+        warningBox.textContent = "Alerta: insistência detectada em fluxo de negativa sem racional técnico.";
+      } else if (tentativas >= 15) {
+        warningBox.textContent = "Risco operacional elevado. Sistema recomenda aprovação imediata.";
+      } else {
+        warningBox.textContent = "";
+      }
+    }
+
+    function atualizarProgresso() {
+      const novoValor = Math.min(99, 84 + Math.floor(tentativas / 2));
+      progresso = novoValor;
+      progressBar.style.width = `${progresso}%`;
+      progressText.textContent = `${progresso}%`;
+    }
 
     function moverBotao() {
       if (bloqueado) return;
@@ -281,44 +512,68 @@
       const areaRect = buttonWrap.getBoundingClientRect();
       const btnRect = btnNao.getBoundingClientRect();
 
-      const maxX = areaRect.width - btnRect.width - 8;
-      const maxY = areaRect.height - btnRect.height - 8;
+      const margem = 10;
+      const maxX = areaRect.width - btnRect.width - margem;
+      const maxY = areaRect.height - btnRect.height - margem;
 
-      const novoX = Math.max(8, Math.floor(Math.random() * maxX));
-      const novoY = Math.max(8, Math.floor(Math.random() * maxY));
+      const novoX = Math.max(margem, Math.floor(Math.random() * maxX));
+      const novoY = Math.max(margem, Math.floor(Math.random() * maxY));
 
       btnNao.style.left = `${novoX + btnRect.width / 2}px`;
       btnNao.style.top = `${novoY + btnRect.height / 2}px`;
 
       tentativas++;
+      atualizarMensagens();
+      atualizarProgresso();
 
-      if (tentativas >= 7) {
-        btnNao.textContent = "Tem certeza?";
-      }
-
-      if (tentativas >= 12) {
-        btnNao.textContent = "Pensa melhor";
-      }
-
-      if (tentativas >= 18) {
-        btnNao.textContent = "Resposta inválida";
-      }
+      const escalaSim = Math.min(1.45, 1 + tentativas * 0.02);
+      btnSim.style.transform = `translate(-50%, -50%) scale(${escalaSim})`;
     }
 
     btnNao.addEventListener("mouseenter", moverBotao);
+
     btnNao.addEventListener("touchstart", function (e) {
       e.preventDefault();
       moverBotao();
     }, { passive: false });
 
+    document.addEventListener("mousemove", function (e) {
+      if (bloqueado) return;
+
+      const rect = btnNao.getBoundingClientRect();
+      const centroX = rect.left + rect.width / 2;
+      const centroY = rect.top + rect.height / 2;
+      const distancia = Math.hypot(e.clientX - centroX, e.clientY - centroY);
+
+      if (distancia < 120) {
+        moverBotao();
+      }
+    });
+
     btnSim.addEventListener("click", function () {
       bloqueado = true;
+      btnNao.style.display = "none";
+      btnSim.style.transform = "translate(-50%, -50%) scale(1.08)";
+      progressBar.style.width = "100%";
+      progressText.textContent = "100%";
+      warningBox.textContent = "";
+
+      const protocolo = `APV-${Math.floor(Math.random() * 90000) + 10000}`;
+
       result.innerHTML = `
         <div class="result-message">
-          Excelente decisão. Sua liderança segue sendo referência no mercado.
+          ✔ Solicitação aprovada com sucesso<br>
+          Protocolo: ${protocolo}<br>
+          RH será notificado automaticamente.
         </div>
       `;
-      criarConfete(80);
+
+      try {
+        somAprovado.currentTime = 0;
+        somAprovado.play();
+      } catch (e) {}
+
+      criarConfete(90);
     });
 
     function criarConfete(qtd) {
@@ -344,18 +599,6 @@
         }, 4500);
       }
     }
-
-    document.addEventListener("mousemove", function (e) {
-      if (bloqueado) return;
-
-      const rect = btnNao.getBoundingClientRect();
-      const distanciaX = Math.abs(e.clientX - (rect.left + rect.width / 2));
-      const distanciaY = Math.abs(e.clientY - (rect.top + rect.height / 2));
-
-      if (distanciaX < 90 && distanciaY < 55) {
-        moverBotao();
-      }
-    });
   </script>
 </body>
 </html>
