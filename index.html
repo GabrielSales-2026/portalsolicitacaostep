@@ -13,7 +13,7 @@ body {
   font-family: Arial, sans-serif;
   background: radial-gradient(circle at top, #1f3b73, #0f172a, #020617);
   color: #e5e7eb;
-  overflow-y: auto; /* ✅ SCROLL LIBERADO */
+  overflow-y: auto;
   padding: 20px;
 }
 
@@ -96,6 +96,23 @@ button {
   color: #86efac;
 }
 
+/* 🎆 CONFETE */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 14px;
+  top: -20px;
+  opacity: 0.9;
+  animation: cair linear forwards;
+  z-index: 9999;
+}
+
+@keyframes cair {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 1;
+  }
+}
 </style>
 </head>
 
@@ -161,6 +178,16 @@ const resultado = document.getElementById("resultado");
 
 let tentativas = 0;
 
+/* 🔁 LOOP DE MENSAGENS */
+const mensagens = [
+  "Tem certeza?",
+  "Avalie o impacto dessa decisão...",
+  "Isso pode afetar o clima organizacional",
+  "Risco de retrabalho identificado",
+  "Sistema recomenda aprovação",
+  "Decisão inconsistente com os dados"
+];
+
 function fugir() {
   const maxX = area.clientWidth - nao.offsetWidth;
   const maxY = area.clientHeight - nao.offsetHeight;
@@ -170,11 +197,7 @@ function fugir() {
 
   tentativas++;
 
-  if (tentativas > 2) nao.innerText = "Tem certeza?";
-  if (tentativas > 5) nao.innerText = "Avalie o impacto...";
-  if (tentativas > 8) nao.innerText = "Isso pode dar ruim";
-  if (tentativas > 11) nao.innerText = "Sistema recomenda aprovação";
-  if (tentativas > 15) nao.innerText = "Decisão inconsistente";
+  nao.innerText = mensagens[tentativas % mensagens.length];
 
   sim.style.transform = `translate(-50%, -50%) scale(${1 + tentativas*0.02})`;
 }
@@ -187,7 +210,27 @@ document.addEventListener("mousemove", (e)=>{
   if(dist < 120) fugir();
 });
 
+/* 🎆 FUNÇÃO CONFETE */
+function soltarConfete(qtd) {
+  const cores = ["#22c55e","#3b82f6","#f59e0b","#ef4444","#a855f7"];
+
+  for (let i = 0; i < qtd; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+
+    c.style.left = Math.random()*100 + "vw";
+    c.style.background = cores[Math.floor(Math.random()*cores.length)];
+    c.style.animationDuration = (Math.random()*2+2)+"s";
+
+    document.body.appendChild(c);
+
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
 sim.addEventListener("click", ()=>{
+  soltarConfete(80);
+
   resultado.innerHTML = `
   ✔ Decisão sensata registrada com sucesso<br>
   Protocolo: APV-${Math.floor(Math.random()*9999)}
