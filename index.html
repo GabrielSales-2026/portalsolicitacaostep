@@ -1,214 +1,197 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portal de Solicitação Interna</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Decisões</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top, #1f3b73 0%, #0f172a 45%, #020617 100%);
-      color: #e5e7eb;
-      overflow-y: auto; /* ✅ SCROLL LIBERADO */
-      padding: 20px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #1f3b73, #0f172a, #020617);
+  color: #e5e7eb;
+  overflow-y: auto; /* ✅ SCROLL LIBERADO */
+  padding: 20px;
+}
 
-    .bg-glow {
-      position: fixed;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      background: rgba(59, 130, 246, 0.18);
-      filter: blur(80px);
-      top: 10%;
-      left: 10%;
-      pointer-events: none;
-    }
+.card {
+  max-width: 750px;
+  margin: 40px auto;
+  background: rgba(15,23,42,0.8);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
 
-    .bg-glow-2 {
-      position: fixed;
-      width: 360px;
-      height: 360px;
-      border-radius: 50%;
-      background: rgba(16, 185, 129, 0.14);
-      filter: blur(80px);
-      bottom: 8%;
-      right: 10%;
-      pointer-events: none;
-    }
+.top {
+  text-align: left;
+  font-size: 13px;
+  color: #94a3b8;
+  margin-bottom: 15px;
+}
 
-    .card {
-      width: 100%;
-      max-width: 720px;
-      margin: 40px auto; /* ✅ CENTRALIZA COM SCROLL */
-      background: rgba(15, 23, 42, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.10);
-      border-radius: 24px;
-      padding: 34px 28px 38px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(12px);
-      text-align: center;
-    }
+h1 { margin: 10px 0; }
 
-    .tag {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(59, 130, 246, 0.15);
-      border: 1px solid rgba(59, 130, 246, 0.30);
-      color: #bfdbfe;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 18px;
-    }
+.subtitle {
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
+.lista {
+  text-align: left;
+  margin-top: 20px;
+  line-height: 1.6;
+}
 
-    .subtitle {
-      color: #cbd5e1;
-      margin-bottom: 20px;
-    }
+.question-box {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+}
 
-    .question-box {
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-    }
+.question {
+  font-size: 22px;
+  font-weight: bold;
+}
 
-    .question {
-      font-size: 26px;
-      font-weight: bold;
-    }
+.button-area {
+  margin-top: 30px;
+  position: relative;
+  height: 180px;
+}
 
-    .button-area {
-      margin-top: 30px;
-      position: relative;
-      height: 180px;
-    }
+button {
+  position: absolute;
+  padding: 14px 24px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
 
-    button {
-      border: none;
-      padding: 14px 26px;
-      font-size: 18px;
-      border-radius: 12px;
-      cursor: pointer;
-      position: absolute;
-    }
+#sim {
+  left: 30%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #22c55e;
+  color: white;
+}
 
-    #btnSim {
-      left: 30%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      background: #22c55e;
-      color: white;
-    }
+#nao {
+  left: 70%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #ef4444;
+  color: white;
+}
 
-    #btnNao {
-      left: 70%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      background: #ef4444;
-      color: white;
-    }
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #86efac;
+}
 
-    .result {
-      margin-top: 20px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #86efac;
-    }
-
-    .attempts {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #94a3b8;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-<div class="bg-glow"></div>
-<div class="bg-glow-2"></div>
-
 <div class="card">
 
-  <div class="tag">PORTAL INTERNO - CONFIDENCIAL</div>
+<div class="top">
+<b>STEP Oil & Gas – Portal de Decisões Importantes</b><br>
+Protocolo: SAL-2026-031<br>
+Área: Suprimentos / Sobrevivência Operacional<br>
+Status: Na sua mão agora
+</div>
 
-  <h1>Análise de viabilidade</h1>
+<h1>Análise crítica de valorização profissional</h1>
 
-  <p class="subtitle">
-    Após análise técnica e operacional, identificou-se uma necessidade clara de ajuste salarial.
-  </p>
+<p class="subtitle">
+Após extensiva análise técnica, emocional e psicológica do colaborador em questão, foi identificado um padrão consistente de:
+</p>
 
-  <div class="question-box">
-    <p class="question">Chefe, aceita me dar um aumento?</p>
-  </div>
+<div class="lista">
+- Resolver problema que não era dele<br>
+- Trabalhar com prazo impossível<br>
+- E ainda assim manter a sanidade<br><br>
 
-  <div class="button-area" id="area">
-    <button id="btnSim">Sim</button>
-    <button id="btnNao">Não</button>
-  </div>
+Diante disso, o sistema sugere fortemente uma correção salarial
+</div>
 
-  <div class="attempts" id="contador"></div>
-  <div class="result" id="resultado"></div>
+<div class="lista">
+<br><b>Critérios avaliados:</b><br>
+Performance sob pressão → Sobreviveu<br>
+Cumprimento de prazo impossível → Milagroso<br>
+Relacionamento com fornecedor difícil → Diplomata da ONU<br>
+Power BI e indicadores → Fez até o que não pediram<br>
+Paciência com urgência de última hora → Em estado crítico<br>
+Salário atual → Claramente defasado
+</div>
+
+<div class="question-box">
+<p class="question">
+Dado o cenário acima, deseja evitar um possível colapso operacional aprovando o aumento?
+</p>
+
+<p class="question" style="margin-top:15px;">
+Solicitação de ajuste salarial identificada. Deseja aprovar?
+</p>
+</div>
+
+<div class="button-area" id="area">
+<button id="sim">Aprovar solicitação</button>
+<button id="nao">Negar (não recomendado)</button>
+</div>
+
+<div class="result" id="resultado"></div>
 
 </div>
 
 <script>
-const btnNao = document.getElementById("btnNao");
-const btnSim = document.getElementById("btnSim");
-const contador = document.getElementById("contador");
-const resultado = document.getElementById("resultado");
+const nao = document.getElementById("nao");
+const sim = document.getElementById("sim");
 const area = document.getElementById("area");
+const resultado = document.getElementById("resultado");
 
 let tentativas = 0;
 
-function mover() {
-  const maxX = area.clientWidth - btnNao.offsetWidth;
-  const maxY = area.clientHeight - btnNao.offsetHeight;
+function fugir() {
+  const maxX = area.clientWidth - nao.offsetWidth;
+  const maxY = area.clientHeight - nao.offsetHeight;
 
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-
-  btnNao.style.left = x + "px";
-  btnNao.style.top = y + "px";
+  nao.style.left = Math.random() * maxX + "px";
+  nao.style.top = Math.random() * maxY + "px";
 
   tentativas++;
 
-  contador.innerText = "Tentativas de negar: " + tentativas;
+  if (tentativas > 2) nao.innerText = "Tem certeza?";
+  if (tentativas > 5) nao.innerText = "Avalie o impacto...";
+  if (tentativas > 8) nao.innerText = "Isso pode dar ruim";
+  if (tentativas > 11) nao.innerText = "Sistema recomenda aprovação";
+  if (tentativas > 15) nao.innerText = "Decisão inconsistente";
 
-  if (tentativas > 5) btnNao.innerText = "Tem certeza?";
-  if (tentativas > 10) btnNao.innerText = "Pensa melhor...";
-  if (tentativas > 15) btnNao.innerText = "Resposta inválida";
-
-  btnSim.style.transform = `translate(-50%, -50%) scale(${1 + tentativas*0.02})`;
+  sim.style.transform = `translate(-50%, -50%) scale(${1 + tentativas*0.02})`;
 }
 
-btnNao.addEventListener("mouseover", mover);
+nao.addEventListener("mouseover", fugir);
 
-document.addEventListener("mousemove", (e) => {
-  const rect = btnNao.getBoundingClientRect();
-  const dx = Math.abs(e.clientX - rect.left);
-  const dy = Math.abs(e.clientY - rect.top);
-
-  if (dx < 100 && dy < 60) mover();
+document.addEventListener("mousemove", (e)=>{
+  const rect = nao.getBoundingClientRect();
+  const dist = Math.hypot(e.clientX - rect.left, e.clientY - rect.top);
+  if(dist < 120) fugir();
 });
 
-btnSim.addEventListener("click", () => {
-  resultado.innerHTML = "✔ Solicitação aprovada com sucesso";
+sim.addEventListener("click", ()=>{
+  resultado.innerHTML = `
+  ✔ Decisão sensata registrada com sucesso<br>
+  Protocolo: APV-${Math.floor(Math.random()*9999)}
+  `;
 });
 </script>
 
